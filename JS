@@ -1,0 +1,162 @@
+$(document).ready(function(){
+
+    var questions = [
+        {question: "Who is the all-time NBA leader in scoring?", choices: ["Michael Jordan", "Wilt Chamberlain","Kareem Abdul-Jabbar", "Kobe Bryant"], answer: "Kareem Abdul-Jabbar"},
+        {question: "What NBA franchise has won the most championships?", choices: ["Boston Celtics", "L.A. Lakers", "Chicago Bulls", "Golden State Warriors"], answer: "Boston Celtics"},
+        {question: "Who is the all-time leading Rebounder in NBA history?", choices: ["Wilt Chamberlain", "Kareem Abdul-Jabbar", "Moses Malone", "Bill Russell"], answer: "Wilt Chamberlain"},
+        {question: "Which of these NBA greats has never won a championship??", choices: ["Kobe Bryant", "Larry Bird", "Magic Johnson", "Karl Malone"], answer: "Karl Malone"},
+        {question: "Who is the NBA All-time leader in assists?", choices: ["Magic Johnson", "John Stockton", "Jason Kidd", "Steve Nash"], answer: "John Stockton"}
+    ];
+
+    var currentQuestionIndex = 0;
+    var score = 0;
+    var totalQuestions = questions.length;
+
+    let questionCreator = function(currentQuestion) {
+
+        let html = `<div>
+                      <input type="radio" name='option' value="${currentQuestion.choices[0]}" checked />
+                      
+                      <label id="option1" class='option' style="cursor:pointer">${currentQuestion.choices[0]}</label>
+          
+                  </div>
+
+                  <div>
+                      <input type="radio" name='option' value="${currentQuestion.choices[1]}" />
+                      <label id="option2" class='option' style="cursor:pointer">${currentQuestion.choices[1]}</label>
+                  </div>
+
+                  <div>
+                      <input type="radio" name='option' value="${currentQuestion.choices[2]}" />
+                      <label id="option3" class='option' style="cursor:pointer">${currentQuestion.choices[2]}</label>
+                  </div>
+
+                  <div>
+                      <input type="radio" name='option' value="${currentQuestion.choices[3]}" />
+                      <label id="option4" class='option' style="cursor:pointer">${currentQuestion.choices[3]}</label>
+                  </div>`
+
+        $("#question-box").html(html)
+
+    };
+
+    $(".start").on("click", function(event) {
+
+        $(".start").hide();
+        $("#question").show();
+
+        let currentQuestion = questions[currentQuestionIndex];
+
+        questionCreator(currentQuestion)
+
+
+        $(".question-text").text(currentQuestion.question);
+
+
+        $("#info").text("Question "+(currentQuestionIndex+1) +" of "+ questions.length);
+
+    });
+
+    let checkAnswer = function(question, answer){
+        let options = [];
+        let selectedOption;
+
+        Array.from(document.getElementById('question-form').elements).forEach(function(el, index) {
+            if(el.type == 'radio'){
+                if(el.checked){
+                    selectedOption = index - 1
+                }
+            }
+        });
+
+        return question.choices[selectedOption] == answer
+    };
+
+
+    $("#question-form").on("submit", function(event){
+        event.preventDefault();
+        console.log('form submitted!')
+        console.log($("#question-form").find('input:radio:checked').val());
+
+        let currentQuestion = questions[currentQuestionIndex];
+
+        if(currentQuestion.question){
+            if(checkAnswer(currentQuestion, currentQuestion.answer)){
+                alert('correct!');
+                score = score + 1;
+            } else {
+                alert(`Incorrect! The correct answer is ${currentQuestion.answer}`);
+            }
+
+            $("#current-score").text(`Current Score: ${score}`);
+
+            showNextFunction();
+
+        } else {
+
+            $("#result").show();
+
+            $("#final-score").html(`<h1>You scored ${score} out of ${questions.length} correct! </h1>`)
+
+            $("#restart").show();
+
+            $("#question-box").hide();
+
+        }
+    });
+
+    let showNextFunction = function() {
+
+        console.log("currentIndex", currentQuestionIndex);
+        console.log("questions Length", questions.length);
+
+        if((currentQuestionIndex+1) < questions.length){
+
+            currentQuestionIndex = currentQuestionIndex + 1;
+
+            let currentQuestion = questions[currentQuestionIndex];
+
+            $(".question-text").text(currentQuestion.question);
+
+            console.log(currentQuestion);
+
+            $("#option1").text(currentQuestion.choices[0]);
+            $("#option2").text(currentQuestion.choices[1]);
+            $("#option3").text(currentQuestion.choices[2]);
+            $("#option4").text(currentQuestion.choices[3]);
+
+            $("#info").text("Question "+(currentQuestionIndex+1) +" of "+ questions.length);
+
+        } else {
+
+            $("#question").hide();
+
+            $("#result").show();
+
+            $("#final-score").html(`<h1>You scored ${score} out of ${questions.length} correct! </h1>`)
+
+            $("#restart").show();
+
+            $("#question-box").hide();
+        }
+    };
+
+$("#restart").on("click", function(event) {
+    currentQuestionIndex = -1;
+    score = 0;
+
+    $("#question").show();
+
+    $("#result").hide();
+
+    $("#restart").hide();
+
+    $("#question-box").show();
+
+    $("#current-score").text(`Current Score: ${score}`);
+
+    showNextFunction();
+})
+
+
+});
