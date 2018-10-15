@@ -1,0 +1,77 @@
+body {
+  background-color: whitesmoke;
+   display: flex;
+  }
+  
+
+.first {
+  width: 750px;
+  height: 550px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 10px 50px 50px 50px;
+  border-radius: 50px;
+  border: 2px solid black;}
+
+  h1 {
+  font: verdana;
+  text-align: center;
+  background-color: white;
+  font-size: 30px;
+  flex-direction: row;
+  color: black;
+  }
+
+  .grid #questions {
+    font-family: times new roman;
+    font-sie: 35px;
+    display: flex;
+    flex-direction: row;
+    color: black;
+    }
+
+
+  .buttons {
+    margin-top: 30px;}
+  
+
+  #button1, #button2, #button3, #button4{
+    background-color: white;
+    width: 300px;
+    font-size: 25px;
+    color: black;
+    display: float: left;
+    border: 1px solid black;
+    border-radius: 50px;
+    margin: 10px 30px 10px 0px;
+    padding: 10px 10px;}
+  ]
+
+  #info{
+    color: black;
+    fint-size: black;}
+
+  #button1:hover, #button2:hover, #button3:hover, #button4:hover{
+    cursor: pointer;
+    background-color: black;}
+
+  #button1:focus, #button2:focus, #button3:focus, #button4:focus{
+    outline: 0;}
+
+  .startButton{
+    background-color: white;
+    width: 200px;
+    font-size: 20px;
+    color: black;
+    border: 1px solid black;
+    border-radius: 50px;
+    margin-left: 25%;
+    padding: 10px 10px;
+    display: inline-block;
+    text-align: center;
+    }
+
+  #startButton:hover{
+    cursor: pointer;
+    background-color: black;
+    }
